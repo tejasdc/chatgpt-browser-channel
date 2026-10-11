@@ -1,0 +1,22 @@
+{
+  "name": "chatgpt-browser-channel",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "exports": {
+    ".": {"types": "./dist/index.d.ts", "default": "./dist/index.js"},
+    "./browser": {"types": "./dist/chatgpt-browser.d.ts", "default": "./dist/chatgpt-browser.js"},
+    "./signin-recovery": {"types": "./dist/signin-recovery.d.ts", "default": "./dist/signin-recovery.js"},
+    "./subscription": {"types": "./dist/chatgpt-subscription.d.ts", "default": "./dist/chatgpt-subscription.js"},
+    "./refresh": {"types": "./dist/chatgpt-refresh.d.ts", "default": "./dist/chatgpt-refresh.js"},
+    "./content": {"types": "./dist/chatgpt-content.d.ts", "default": "./dist/chatgpt-content.js"},
+    "./inventory": {"types": "./dist/chatgpt-inventory.d.ts", "default": "./dist/chatgpt-inventory.js"}
+  },
+  "bin": {"chatgpt-browser-channel": "./dist/cli.js"},
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {"build": "tsc -p tsconfig.json", "prepare": "npm run build", "check": "tsc -p tsconfig.json --noEmit", "test:ownership": "node --test tests/ownership.mjs", "test:security": "node --test tests/security.mjs", "test:reliability": "node --test tests/reliability.mjs", "test:http-model": "node --test tests/http-model.mjs", "test:signin": "node --test tests/signin-recovery.mjs", "check:public": "node scripts/check-public-source.mjs"},
+  "dependencies": {"playwright": "1.63.0", "zod": "4.5.4"},
+  "devDependencies": {"@types/node": "22.20.1", "typescript": "5.8.3"}
+}
