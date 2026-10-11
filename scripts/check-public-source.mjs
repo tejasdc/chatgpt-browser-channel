@@ -10,8 +10,12 @@ const forbidden=[
  [/\b(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9_]{20,})\b/,'credential token'],
  [/\b(?:data-identifier|challenges\.cloudflare\.com|xdotool)\b/i,'private sign-in or challenge automation']
 ];
+const internalDocumentPath=file=>file.startsWith('notes/')||
+ /(?:^|\/)(?:retrospectives?|postmortems?|incidents?|lessons?)(?:\/|$)/i.test(file)||
+ /(?:^|\/)[^/]*(?:retrospect|postmortem|incident|lesson)[^/]*\.(?:md|mdx|txt)$/i.test(file);
 const failures=[];
 function inspect(file,contents,label=file){
+ if(internalDocumentPath(file))failures.push(`${label}: internal learning record`);
  if(file==='package-lock.json'||file==='scripts/check-public-source.mjs')return;
  const source=contents.replaceAll('contributors@users.noreply.github.com','');
  for(const [pattern,reason] of forbidden)if(pattern.test(source))failures.push(`${label}: ${reason}`);
